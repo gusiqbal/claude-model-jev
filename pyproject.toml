@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.backends"
+
+[project]
+name = "claude-model-jev"
+version = "0.1.0"
+description = "JEV-style typed decision system for selecting the optimal Claude model"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "gusiqbal" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+
+[project.scripts]
+claude-model-jev = "claude_model_jev.router:demo"
