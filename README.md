@@ -25,7 +25,7 @@ from claude_model_jev import extract_signal, choose_model
 signal = extract_signal("Build an autonomous agent that browses the web and writes a report")
 decision = choose_model(signal)
 
-print(decision.choice)        # claude-opus-5-5
+print(decision.choice)        # e.g. claude-fable-5-2
 print(decision.probabilities) # {model_id: probability, ...}
 print(decision.reasoning)     # one-line rationale
 ```
@@ -52,10 +52,16 @@ decision = choose_model(signal, candidates=["claude-opus-5-5", "claude-sonnet-5-
 ## CLI
 
 ```bash
-claude-model-jev
+claude-model-jev "Summarise this article"                      # keyword extraction (English)
+claude-model-jev --complexity COMPLEX --quality HIGH --agentic  # explicit signals, any language
+python3 -m claude_model_jev.router                              # demo across 7 task types
 ```
 
-Runs the built-in demo across 7 task types.
+Prints JSON: `model_id`, `tier`, `name`, `effort`, `confidence`, `signal`, `top`. Flags override signals extracted from the text. `--candidates` limits the pool (comma-separated model IDs).
+
+## Claude Code orchestration
+
+Let an LLM classify the task, since keyword extraction only knows English. Pass the signals as flags, then dispatch a subagent with the returned `tier` as its model and `effort` as its effort. See `skills/route/SKILL.md` for a ready-made Claude Code skill.
 
 ## How it works
 
